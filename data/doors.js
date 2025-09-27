@@ -1,0 +1,218 @@
+window.DOORS = [
+  { 
+"day": 1,  
+"title": "Day 1 Activity",  
+"image": "assets/placeholders/Door 1.png",  
+"modalImage": "assets/placeholders/Day1_Halloween_Maze.png",  
+"link": "https://www.canva.com/design/DAGycYtmGO4/0zxV4oErgEDIvjIo3FHejg/edit?utm_content=DAGycYtmGO4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 2,  "title": 
+"Day 2 Activity",  
+"image": "assets/placeholders/Door 2.png",  
+"modalImage": "assets/placeholders/Day2_Find_The_Hidden_Word.png",  
+"link": "https://www.canva.com/design/DAGu18LMyWY/UDzdyeb2vfhBpoUFJy8kRg/edit?utm_content=DAGu18LMyWY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 3,  
+"title": "Day 3 Activity",  
+"image": "assets/placeholders/Door 3.png",  
+"modalImage": "assets/placeholders/Day3_Halloween_Crossword.png",  
+"link": "https://www.canva.com/design/DAGwGuNwAAU/tQ1U9frKCxuVcvgKGFWKBQ/edit?utm_content=DAGwGuNwAAU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 4,  
+"title": "Day 4 Activity",  
+"image": "assets/placeholders/Door 4.png",  
+"modalImage": "assets/placeholders/Day4_Halloween_Coloring_Contest.png",  
+"link": "https://www.canva.com/design/DAGwhQQIGCY/YjhzNv34Ic0MN4-vWbG6Tw/edit?utm_content=DAGwhQQIGCY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 5,  
+"title": "Day 5 Activity",  
+"image": "assets/placeholders/Door 5.png",  
+"modalImage": "assets/placeholders/Day5_Halloween_Word_Scramble.png",  
+"link": "https://www.canva.com/design/DAGzqtnDqXE/aw0euDqRQQEHxQ6rhSaGGw/edit?utm_content=DAGzqtnDqXE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 6,  
+"title": "Day 6 Activity",  
+"image": "assets/placeholders/Door 6.png",  
+"modalImage": "assets/placeholders/Day6_The_Pumpkin_with_No_Nose.png",  
+"link": "https://www.canva.com/design/DAGzpKjP_1E/bEpQX-F_-_ptb8ZlOvIGCQ/edit?utm_content=DAGzpKjP_1E&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 7,  
+"title": "Day 7 Activity",  
+"image": "assets/placeholders/Door 7.png",  
+"modalImage": "assets/placeholders/Day7_Ghost_Origami.png",  
+"link": "https://www.canva.com/design/DAGziAq5bww/Mcf2kpQMwhfeOvamWQCkwA/edit?utm_content=DAGziAq5bww&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 8,  
+"title": "Day 8 Activity",  
+"image": "assets/placeholders/Door 8.png",  
+"modalImage": "assets/placeholders/Day8_Welcome_to_the_Pumpkin_Patch.png",  
+"link": "https://www.canva.com/design/DAGzSTAeSqg/iNTgTSO-yDGEqNlOYLa3pw/edit?utm_content=DAGzSTAeSqg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 9,  
+"title": "Day 9 Activity",  
+"image": "assets/placeholders/Door 9.png",  
+"modalImage": "assets/placeholders/Day9_Halloween_Scattegories.png",  
+"link": "https://www.canva.com/design/DAGycS1mgPs/oS77kmR7HftY2vgUA1tehw/edit?utm_content=DAGycS1mgPs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 10, 
+"title": "Day 10 Activity", 
+"image": "assets/placeholders/Door 10.png", 
+"modalImage": "assets/placeholders/Day10_Halloween_Word_Search.png", 
+"link": "https://www.canva.com/design/DAGzpIZ-SMA/zddsDMx0eRatk5lVdMUrIg/edit?utm_content=DAGzpIZ-SMA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 11, 
+"title": "Day 11 Activity", 
+"image": "assets/placeholders/Door 11.png", 
+"modalImage": "assets/placeholders/Day11_Pixel_Art.png", 
+"link": "https://www.canva.com/design/DAGzltRmoRQ/lePRBFn9HPbQVWbv7UJCUQ/edit?utm_content=DAGzltRmoRQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 12, 
+"title": "Day 12 Activity", 
+"image": "assets/placeholders/Door 12.png", 
+"modalImage": "assets/placeholders/Day12_True_or_False.png", 
+"link": "https://www.canva.com/design/DAGwhhZEi8A/2BdcKOZAk8uhGKoFp71cLQ/edit?utm_content=DAGwhhZEi8A&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 13, 
+"title": "Day 13 Activity", 
+"image": "assets/placeholders/Door 13.png", 
+"modalImage": "assets/placeholders/Day13_Halloween_Mad_Libs.png", 
+"link": "https://www.canva.com/design/DAGwhvBlA0o/KRIeI1ebPsALZh81WUblDg/edit?utm_content=DAGwhvBlA0o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 14, 
+"title": "Day 14 Activity", 
+"image": "assets/placeholders/Door 14.png", 
+"modalImage": "assets/placeholders/Day14_Halloween_Trivia.png", 
+"link": "https://www.canva.com/design/DAGzxO_KxFU/j-dYI_yHEZtnglCUf8ijFQ/edit?utm_content=DAGzxO_KxFU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 15, 
+"title": "Day 15 Activity", 
+"image": "assets/placeholders/Door 15.png", 
+"modalImage": "assets/placeholders/Day15_The_Mystery_of_Old_Richmond_Road.png", 
+"link": "https://www.canva.com/design/DAGz2ViHA1Q/bswU1AjURBysWP8I4U3lgw/edit?utm_content=DAGz2ViHA1Q&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 16, 
+"title": "Day 16 Activity", 
+"image": "assets/placeholders/Door 16.png", 
+"modalImage": "assets/placeholders/Day16_Code_Breaker.png", 
+"link": "https://www.canva.com/design/DAGxAL0hJYg/MYbfvDk8q4gaUAua8ScF1g/edit?utm_content=DAGxAL0hJYg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 17, 
+"title": "Day 17 Activity", 
+"image": "assets/placeholders/Door 17.png", 
+"modalImage": "assets/placeholders/Day17_Connect_the_Dots.png", 
+"link": "https://www.canva.com/design/DAGyQ7Aaz4o/JKuFj0f_ipgLPHJOtTB9Dw/edit?utm_content=DAGyQ7Aaz4o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 18, 
+"title": "Day 18 Activity", 
+"image": "assets/placeholders/Door 18.png", 
+"modalImage": "assets/placeholders/Day18_Have_You_Ever.png", 
+"link": "https://www.canva.com/design/DAGz7SeSqlE/WN8tbkGOT9KMyfQxdLZmVQ/edit?utm_content=DAGz7SeSqlE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 19, 
+"title": "Day 19 Activity", 
+"image": "assets/placeholders/Door 19.png", 
+"modalImage": "assets/placeholders/Day19_Lets_Fly.png", 
+"link": "https://www.canva.com/design/DAGzPypS4FI/LR_MhHLVYYEkOmbAqqmrsA/edit?utm_content=DAGzPypS4FI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 20, 
+"title": "Day 20 Activity", 
+"image": "assets/placeholders/Door 20.png", 
+"modalImage": "assets/placeholders/Day20_Lets_Get_Mummied.png", 
+"link": "https://www.canva.com/design/DAGzfBmorEI/JVoz9JUNSQlCDNGAb8QNvQ/edit?utm_content=DAGzfBmorEI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 21, 
+"title": "Day 21 Activity", 
+"image": "assets/placeholders/Door 21.png", 
+"modalImage": "assets/placeholders/Day21_Pumpkin_Carving.png", 
+"link": "https://www.canva.com/design/DAGyI4HwR5M/w0YBg8Kim2Cs8ngYegC1Mg/edit?utm_content=DAGyI4HwR5M&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 22, 
+"title": "Day 22 Activity", 
+"image": "assets/placeholders/Door 22.png", 
+"modalImage": "assets/placeholders/Day22_Riddle_Mansion.png", 
+"link": "#replace-with-your-link-for-day-22"
+ },
+  { 
+"day": 23, 
+"title": "Day 23 Activity", 
+"image": "assets/placeholders/Door 23.png", 
+"modalImage": "assets/placeholders/Day23_Seek_&_Find.png", 
+"link": "https://www.canva.com/design/DAGwhsp5Q_A/CIfSHo0pQQI8NZgdS5qmPw/edit?utm_content=DAGwhsp5Q_A&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 24, 
+"title": "Day 24 Activity", 
+"image": "assets/placeholders/Door 24.png", 
+"modalImage": "assets/placeholders/Day24_Which_Witch_is_Which.png", 
+"link": "https://www.canva.com/design/DAGyjPkMzdI/mHT6aHbUyL71D6vsmD_J6w/edit?utm_content=DAGyjPkMzdI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" },
+  { 
+"day": 25, 
+"title": "Day 25 Activity", 
+"image": "assets/placeholders/Door 25.png", 
+"modalImage": "assets/placeholders/Day25_ Adopt_A_Monster.png", 
+"link": "https://www.canva.com/design/DAGxAZZyeyw/amqo-H1ZmrMmkjScY6gltA/edit?utm_content=DAGxAZZyeyw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 26, 
+"title": "Day 26 Activity", 
+"image": "assets/placeholders/Door 26.png", 
+"modalImage": "assets/placeholders/Day26_Halloween_Slime.png", 
+"link": "https://www.canva.com/design/DAGyB2Ns7vo/XQZ37q8mFFcqkgG3IrxjtA/edit?utm_content=DAGyB2Ns7vo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 27, 
+"title": "Day 27 Activity", 
+"image": "assets/placeholders/Door 27.png", 
+"modalImage": "assets/placeholders/Day27_Spot_12_Differences.png", 
+"link": "https://www.canva.com/design/DAGzXnsdPEA/VdRAF7eX-HhZm2RnepnPcQ/edit?utm_content=DAGzXnsdPEA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 28, 
+"title": "Day 28 Activity", 
+"image": "assets/placeholders/Door 28.png", 
+"modalImage": "assets/placeholders/Day 28_Wizards_Brew.png", 
+"link": "https://www.canva.com/design/DAGxOaIwOcs/ll2nl5UuNqQ0Ct_N0TZgKQ/edit?utm_content=DAGxOaIwOcs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 29, 
+"title": "Day 29 Activity", 
+"image": "assets/placeholders/Door 29.png", 
+"modalImage": "assets/placeholders/Day29_Draw_It.png", 
+"link": "https://www.canva.com/design/DAGx7Xv7RuU/Ygsw7xm4UwfoqGLGW1bfrA/edit?utm_content=DAGx7Xv7RuU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 30, 
+"title": "Day 30 Activity", 
+"image": "assets/placeholders/Door 30.png", 
+"modalImage": "assets/placeholders/Day30_Halloween_Alphabet.png", 
+"link": "https://www.canva.com/design/DAGziH6JnmE/mbH7xlBaL2qhME0v-tcsmw/edit?utm_content=DAGziH6JnmE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ },
+  { 
+"day": 31, 
+"title": "Day 31 Activity", 
+"image": "assets/placeholders/Door 31.png", 
+"modalImage": "assets/placeholders/Day31_Halloween_Hunt.png", 
+"link": "https://www.canva.com/design/DAGzlKEV2QU/P-m85_G7_N9l5tR9NqzZaA/edit?utm_content=DAGzlKEV2QU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+ }
+];

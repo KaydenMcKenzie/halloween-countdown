@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown to Halloween!</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="theme-pumpkins">
+  <header class="site-header">
+  <div>
+    <h1>Countdown to Halloween</h1>
+    <div class="controls" style="text-align: center; margin-top: 10px;">
+      <label><input type="checkbox" id="previewToggle"> Preview (unlock all)</label>
+    </div>
+  </div>
+</header>
+
+  <main>
+    <div id="calendar" class="calendar-grid"></div>
+  </main>
+
+    <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeModal" class="close-btn" aria-label="Close">&times;</button>
+      <h2 id="modalTitle"></h2>
+      <img id="modalImage" alt="Activity image" />
+      <div class="modal-actions">
+        <a id="modalLink" class="action-btn" target="_blank" rel="noopener">Go to activity</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/doors.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
