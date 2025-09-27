@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Countdown to Halloween</title>
+  <title>Halloween Countdown</title>
 
-  <!-- Spooky display font (optional) -->
+  <!-- Title font -->
   <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
 
-  <!-- Your stylesheet (bump the ?v= number if the browser caches old CSS) -->
-  <link rel="stylesheet" href="styles.css?v=10">
+  <!-- Styles (bump v= if your browser caches old CSS) -->
+  <link rel="stylesheet" href="styles.css?v=20" />
 </head>
 <body>
-  <!-- Header -->
   <header class="site-header">
-  <h1>Halloween Countdown</h1>
-  <div class="preview-wrapper">
-    <label class="preview-toggle">
-      <input type="checkbox" id="previewToggle">
-      Preview (unlock all)
-    </label>
-  </div>
-</header>
+    <h1>Halloween Countdown</h1>
 
-  <!-- Calendar grid -->
+    <!-- Centered preview toggle -->
+    <div class="preview-wrapper">
+      <label class="preview-toggle">
+        <input type="checkbox" id="previewToggle" />
+        Preview (unlock all)
+      </label>
+    </div>
+  </header>
+
   <main>
     <div id="calendar" class="calendar-grid" aria-live="polite"></div>
   </main>
@@ -40,8 +40,8 @@
     </div>
   </div>
 
-  <!-- Load door data first, then behavior. Bump ?v= to bust cache if needed. -->
-  <script src="data/doors.js?v=10"></script>
-  <script src="script.js?v=10"></script>
+  <!-- Data first, then behavior (bump v= to bust cache) -->
+  <script src="data/doors.js?v=20"></script>
+  <script src="script.js?v=20"></script>
 </body>
 </html>

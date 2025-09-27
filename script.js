@@ -1,11 +1,11 @@
 // === Configuration ===
 const CONFIG = {
   year: new Date().getFullYear(),
-  month: 10, // October (1-12)
+  month: 10, // October
   timeZone: "America/Toronto"
 };
 
-/* ---------- Preview mode helpers (checkbox + localStorage) ---------- */
+/* ---------- Preview (checkbox + localStorage) ---------- */
 function isPreviewEnabled() {
   return localStorage.getItem("hc_preview") === "1";
 }
@@ -31,7 +31,6 @@ function getZonedDateParts(tz) {
     day: parseInt(obj.day, 10)
   };
 }
-
 function isDoorUnlocked(day, preview = false) {
   if (preview) return true;
   const { year, month, day: todayDay } = getZonedDateParts(CONFIG.timeZone);
@@ -42,37 +41,36 @@ function isDoorUnlocked(day, preview = false) {
   return todayDay >= day;
 }
 
-/* ---------- UI build ---------- */
+/* ---------- Build UI ---------- */
 function buildCalendar() {
   const grid = document.getElementById("calendar");
-  if (!grid) return console.error("#calendar not found in index.html");
+  if (!grid) return console.error("#calendar not found");
   grid.innerHTML = "";
 
   if (!Array.isArray(window.DOORS)) {
-    console.error("DOORS data not found. Ensure data/doors.js loads before script.js.");
+    console.error("window.DOORS not found. Make sure data/doors.js is loaded before script.js.");
     return;
   }
 
-  // preview is controlled by checkbox (persisted in localStorage)
+  // preview state from checkbox (if present) or memory
   const toggle = document.getElementById("previewToggle");
   const preview = toggle ? toggle.checked : isPreviewEnabled();
 
-  // Shuffle the doors each load
-const shuffled = [...window.DOORS].sort(() => Math.random() - 0.5);
-shuffled.forEach((entry) => {
+  // SHUFFLE the tiles each load
+  const shuffled = [...window.DOORS].sort(() => Math.random() - 0.5);
 
-  ordered.forEach((entry) => {
+  shuffled.forEach((entry) => {
     const day = entry.day;
     const unlocked = isDoorUnlocked(day, preview);
 
-    // Outer tile
+    /* Outer tile */
     const door = document.createElement("div");
     door.className = "door " + (unlocked ? "unlocked" : "locked");
 
     const inner = document.createElement("div");
     inner.className = "door-inner";
 
-    // ---------- FRONT (door tile with centered <img>) ----------
+    /* Front face */
     const front = document.createElement("div");
     front.className = "door-face door-front";
 
@@ -94,7 +92,7 @@ shuffled.forEach((entry) => {
     lockedOverlay.textContent = "Opens Oct " + day;
     front.appendChild(lockedOverlay);
 
-    // ---------- BACK (revealed image) ----------
+    /* Back face */
     const back = document.createElement("div");
     back.className = "door-face door-back";
 
@@ -110,7 +108,7 @@ shuffled.forEach((entry) => {
     inner.appendChild(back);
     door.appendChild(inner);
 
-    // Click behavior
+    /* Click behavior */
     if (unlocked) {
       door.addEventListener("click", () => {
         door.classList.toggle("open");
@@ -142,10 +140,8 @@ function openModal(entry) {
 
   modal.classList.remove("hidden");
 }
-
 function closeModal() {
-  const modal = document.getElementById("modal");
-  if (modal) modal.classList.add("hidden");
+  document.getElementById("modal")?.classList.add("hidden");
 }
 
 /* ---------- Events & init ---------- */
@@ -160,10 +156,8 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("previewToggle");
   if (toggle) {
-    // initialize checkbox from saved state
-    toggle.checked = isPreviewEnabled();
-    // persist changes and rebuild
-    toggle.addEventListener("change", (e) => {
+    toggle.checked = isPreviewEnabled();                // load memory
+    toggle.addEventListener("change", (e) => {          // persist & rebuild
       setPreviewEnabled(e.target.checked);
       buildCalendar();
     });
