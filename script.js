@@ -57,8 +57,9 @@ function buildCalendar() {
   const toggle = document.getElementById("previewToggle");
   const preview = toggle ? toggle.checked : isPreviewEnabled();
 
-  // Order by day (1 → 31)
-  const ordered = [...window.DOORS].sort((a, b) => a.day - b.day);
+  // Shuffle the doors each load
+const shuffled = [...window.DOORS].sort(() => Math.random() - 0.5);
+shuffled.forEach((entry) => {
 
   ordered.forEach((entry) => {
     const day = entry.day;

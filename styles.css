@@ -32,11 +32,25 @@ body {
   color: #ff7a1a;
   text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
 }
-.preview-toggle { margin-top: 10px; text-align: center; font-size: 1rem; }
-.preview-toggle input { margin-right: 6px; }
+.preview-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 
-@media (max-width: 700px) {
-  .site-header h1 { font-size: 3rem; }
+.preview-toggle {
+  font-size: 1.1rem;
+  color: #fff;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.preview-toggle:hover {
+  background: rgba(255, 122, 26, 0.6);
 }
 
 /* ========== Calendar grid ========== */
@@ -133,7 +147,11 @@ body {
   font-size: 0.95rem;
   opacity: 0; transition: opacity 0.3s ease;
 }
-.door.locked:hover .locked-overlay { opacity: 1; }
+/* Always show outline around each door */
+.door {
+  border: 3px solid rgba(255, 177, 77, 0.8);  /* orange outline */
+  box-shadow: 0 0 12px rgba(255, 177, 77, 0.6);
+}
 
 /* ========== Modal & buttons ========== */
 .action-btn {
