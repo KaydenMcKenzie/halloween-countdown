@@ -57,42 +57,82 @@ body {
   background: #1a1a1a;
 }
 
-/* Inner 3D container */
 .door-inner {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
-.door.unlocked.open .door-inner {
-  transform: rotateY(180deg);
-}
 
-/* Faces */
+.door.unlocked.open .door-inner { transform: rotateY(180deg); }
+
+/* Faces fill the tile */
 .door-face {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
-/* Front (closed) — this is what you SEE first */
+/* FRONT should be on top when closed */
 .door-front {
+  z-index: 3;                 /* make sure it's above the back */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
+/* The door art as an <img> */
 .door-front .door-thumb {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 92%;
+  max-height: 92%;
   width: auto;
   height: auto;
-  object-fit: contain;
+  object-fit: contain;        /* no crop, no squish */
   display: block;
 }
+
+/* Day number badge */
+.door-front .day-number {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: rgba(0,0,0,0.7);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* BACK sits underneath until flipped */
+.door-back {
+  z-index: 1;
+  transform: rotateY(180deg);
+  background: #15151c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.door-back .peek {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Locked overlay */
+.locked-overlay {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  background: rgba(0,0,0,0.55);
+  color: #ffb14d;
+  font-size: 0.95rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.door.locked:hover .locked-overlay { opacity: 1; }
 
 /* Day number badge (keep in corner; change if you want centered) */
 .door-front .day-number {
