@@ -79,14 +79,19 @@ body {
 
 /* Front (closed) — this is what you SEE first */
 .door-front {
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  border: 2px solid rgba(255,255,255,0.08);
-  background-size: contain;  
-  background-position: center;
-  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+}
+
+.door-front .door-thumb {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 /* Day number badge (keep in corner; change if you want centered) */
