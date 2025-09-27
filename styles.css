@@ -44,23 +44,25 @@ body {
   margin: 20px auto 40px;
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* a bit larger */
-  gap: 18px;
+  /* Each tile gets at least 220px; grid auto-fits clean rows */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
+
 @media (max-width: 820px) { .calendar-grid { grid-template-columns: repeat(5, 1fr); } }
 @media (max-width: 580px) { .calendar-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 420px) { .calendar-grid { grid-template-columns: repeat(3, 1fr); } }
 
-/* ========== Door tiles ========== */
+/* Door container */
 .door {
   position: relative;
-  aspect-ratio: 1 / 1;
   width: 100%;
-  min-height: clamp(180px, 16vw, 280px);
-  perspective: 900px;
-  border-radius: 12px;
+  aspect-ratio: 3 / 4;                /* consistent door shape */
+  /* remove any extra margins; the grid gap handles spacing */
+  perspective: 1000px;
+  border-radius: 14px;
   overflow: hidden;
-  background: #1a1a1a;
+  background: transparent;            /* no black frame */
 }
 
 .door-inner {
@@ -68,67 +70,53 @@ body {
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
+
 .door.unlocked.open .door-inner { transform: rotateY(180deg); }
 
 /* Faces fill the tile */
 .door-face {
   position: absolute; inset: 0;
   backface-visibility: hidden;
-  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 14px;
   overflow: hidden;
+  background: transparent;            /* keep front clean */
 }
 
 /* Front (what you see first) */
-.door-front {
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
+.door-front { z-index: 3; }
 
 /* Door art as <img> so mixed sizes look tidy */
 .door-front .door-thumb {
-  max-width: 98%;
-  max-height: 98%;
-  width: auto;
-  height: auto;
-  object-fit: contain;   /* whole image, no squish */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;                 /* whole image, no crop */
   display: block;
-}
-
-/* Day number badge */
-.door-front .door-thumb {
-  max-width: 96%;
-  max-height: 96%;
-  width: auto;
-  height: auto;
-  object-fit: contain; /* no crop, always centered */
-  display: block;
+  padding: 10px;                       /* slight breathing room */
 }
 
 /* Day number badge */
 .door-front .day-number {
   position: absolute;
   top: 8px;
-  left: 8px;             /* changed from right */
-  background: rgba(0,0,0,0.78);
+  left: 8px;
+  background: rgba(0,0,0,0.8);
   padding: 8px 12px;
   border-radius: 10px;
-  font-size: 1.25rem;    /* bigger */
+  font-size: 1.25rem;
   font-weight: 800;
   color: #fff;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: .02em;
 }
 
 /* Back (revealed) */
 .door-back {
-  z-index: 1;
   transform: rotateY(180deg);
-  background: #15151c;
+  background: #15151c;                 /* only on the back */
   display: flex; align-items: center; justify-content: center;
 }
+
 .door-back .peek {
   width: 100%; height: 100%;
   object-fit: cover;
