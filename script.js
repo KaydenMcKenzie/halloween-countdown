@@ -1,20 +1,20 @@
 // === Configuration ===
 const CONFIG = {
   year: new Date().getFullYear(),
-  month: 10, // October
+  month: 10, // October (1-12)
   timeZone: "America/Toronto"
 };
 
+/* ---------- Preview mode helpers (checkbox + localStorage) ---------- */
 function isPreviewEnabled() {
   return localStorage.getItem("hc_preview") === "1";
 }
 function setPreviewEnabled(on) {
   if (on) localStorage.setItem("hc_preview", "1");
   else localStorage.removeItem("hc_preview");
-  buildCalendar();
 }
 
-// Get today's date in given timezone
+/* ---------- Date helpers ---------- */
 function getZonedDateParts(tz) {
   const fmt = new Intl.DateTimeFormat("en-CA", {
     timeZone: tz,
@@ -32,9 +32,8 @@ function getZonedDateParts(tz) {
   };
 }
 
-// Door unlock check
-function isDoorUnlocked(day) {
-  if (isPreviewEnabled()) return true;
+function isDoorUnlocked(day, preview = false) {
+  if (preview) return true;
   const { year, month, day: todayDay } = getZonedDateParts(CONFIG.timeZone);
   if (year > CONFIG.year) return true;
   if (year < CONFIG.year) return false;
@@ -43,36 +42,45 @@ function isDoorUnlocked(day) {
   return todayDay >= day;
 }
 
+/* ---------- UI build ---------- */
 function buildCalendar() {
   const grid = document.getElementById("calendar");
-  if (!grid) return;
+  if (!grid) return console.error("#calendar not found in index.html");
   grid.innerHTML = "";
 
   if (!Array.isArray(window.DOORS)) {
-    console.error("DOORS data not found. Check data/doors.js is loaded before script.js.");
+    console.error("DOORS data not found. Ensure data/doors.js loads before script.js.");
     return;
   }
 
+  // preview is controlled by checkbox (persisted in localStorage)
+  const toggle = document.getElementById("previewToggle");
+  const preview = toggle ? toggle.checked : isPreviewEnabled();
+
+  // Order by day (1 → 31)
   const ordered = [...window.DOORS].sort((a, b) => a.day - b.day);
 
   ordered.forEach((entry) => {
     const day = entry.day;
-    const unlocked = isDoorUnlocked(day);
+    const unlocked = isDoorUnlocked(day, preview);
 
+    // Outer tile
     const door = document.createElement("div");
     door.className = "door " + (unlocked ? "unlocked" : "locked");
 
     const inner = document.createElement("div");
     inner.className = "door-inner";
 
-    // FRONT
+    // ---------- FRONT (door tile with centered <img>) ----------
     const front = document.createElement("div");
     front.className = "door-face door-front";
 
     const thumb = document.createElement("img");
     thumb.className = "door-thumb";
+    thumb.loading = "eager";
+    thumb.decoding = "async";
     thumb.src = entry.doorImage || entry.image || "";
-    thumb.alt = entry.title || `Day ${day} Door`;
+    thumb.alt = entry.title ? `${entry.title} (Day ${day})` : `Day ${day} Door`;
     front.appendChild(thumb);
 
     const dayNumber = document.createElement("div");
@@ -85,20 +93,23 @@ function buildCalendar() {
     lockedOverlay.textContent = "Opens Oct " + day;
     front.appendChild(lockedOverlay);
 
-    // BACK
+    // ---------- BACK (revealed image) ----------
     const back = document.createElement("div");
     back.className = "door-face door-back";
 
     const img = document.createElement("img");
     img.className = "peek";
+    img.loading = "lazy";
+    img.decoding = "async";
     img.src = entry.activityImage || entry.modalImage || entry.image || "";
-    img.alt = entry.title || `Day ${day} Image`;
+    img.alt = entry.title ? `${entry.title} (Day ${day})` : `Day ${day} Image`;
     back.appendChild(img);
 
     inner.appendChild(front);
     inner.appendChild(back);
     door.appendChild(inner);
 
+    // Click behavior
     if (unlocked) {
       door.addEventListener("click", () => {
         door.classList.toggle("open");
@@ -113,31 +124,30 @@ function buildCalendar() {
 
     grid.appendChild(door);
   });
-
-  // Sync checkbox with state
-  const toggle = document.getElementById("previewToggle");
-  if (toggle) toggle.checked = isPreviewEnabled();
 }
 
+/* ---------- Modal ---------- */
 function openModal(entry) {
   const modal = document.getElementById("modal");
-  document.getElementById("modalTitle").textContent = entry.title || "Activity";
-
+  const titleEl = document.getElementById("modalTitle");
   const imgEl = document.getElementById("modalImage");
+  const linkEl = document.getElementById("modalLink");
+  if (!modal || !titleEl || !imgEl || !linkEl) return;
+
+  titleEl.textContent = entry.title || "Activity";
   imgEl.src = entry.activityImage || entry.modalImage || entry.image || "";
   imgEl.alt = entry.title || "Activity image";
-
-  const linkEl = document.getElementById("modalLink");
   linkEl.href = entry.link || "#";
 
   modal.classList.remove("hidden");
 }
 
 function closeModal() {
-  document.getElementById("modal").classList.add("hidden");
+  const modal = document.getElementById("modal");
+  if (modal) modal.classList.add("hidden");
 }
 
-// Event bindings
+/* ---------- Events & init ---------- */
 document.getElementById("closeModal")?.addEventListener("click", closeModal);
 document.getElementById("modal")?.addEventListener("click", (e) => {
   if (e.target.id === "modal") closeModal();
@@ -146,13 +156,15 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
-// Preview toggle
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("previewToggle");
   if (toggle) {
+    // initialize checkbox from saved state
     toggle.checked = isPreviewEnabled();
+    // persist changes and rebuild
     toggle.addEventListener("change", (e) => {
       setPreviewEnabled(e.target.checked);
+      buildCalendar();
     });
   }
   buildCalendar();
