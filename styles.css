@@ -82,13 +82,11 @@ body {
   z-index: 2;
   display: grid;
   place-items: center;
-  font-weight: 700;
-  font-size: 1.4rem;
-  letter-spacing: 0.5px;
   border: 2px solid rgba(255,255,255,0.08);
-  background-size: cover;
+  background-size: contain;      /* <--- instead of cover */
   background-position: center;
   background-repeat: no-repeat;
+  position: relative;
 }
 
 /* Day number badge (keep in corner; change if you want centered) */
