@@ -107,6 +107,21 @@ body {
   display: block;
 }
 
+/* Day number badge */
+.door-front .day-number {
+  position: absolute;
+  top: 8px;
+  left: 8px;             /* changed from right */
+  background: rgba(0,0,0,0.78);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 1.25rem;    /* bigger */
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
 /* Back (revealed) */
 .door-back {
   z-index: 1;
