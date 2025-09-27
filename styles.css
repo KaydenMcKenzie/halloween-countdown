@@ -1,11 +1,12 @@
-/* Basic reset */
+/* ========== Reset ========== */
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
-/* Fonts & colors */
+/* ========== Page ========== */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: 
+  /* Background image + dark radial overlay */
+  background:
     url("assets/backgrounds/Background1.png") no-repeat center center fixed,
     radial-gradient(1200px 600px at 50% -200px, rgba(26,26,36,0.7), rgba(11,11,15,0.9));
   background-size: cover, auto;
@@ -15,6 +16,7 @@ body {
   flex-direction: column;
 }
 
+/* ========== Header ========== */
 .site-header {
   padding: 20px;
   display: flex;
@@ -24,14 +26,18 @@ body {
 
 .site-header h1 {
   margin: 0;
-  font-size: 6rem;
+  font-size: 6rem;                 /* adjust if too big on small screens */
   font-family: "Creepster", cursive, sans-serif;
   text-align: center;
   color: #ff7a1a;
   text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
 }
 
-/* Grid */
+@media (max-width: 700px) {
+  .site-header h1 { font-size: 3rem; }
+}
+
+/* ========== Calendar grid ========== */
 .calendar-grid {
   width: 100%;
   max-width: 1100px;
@@ -45,7 +51,7 @@ body {
 @media (max-width: 580px) { .calendar-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 420px) { .calendar-grid { grid-template-columns: repeat(3, 1fr); } }
 
-/* Door tile */
+/* ========== Door tiles ========== */
 .door {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -54,91 +60,44 @@ body {
   perspective: 900px;
   border-radius: 12px;
   overflow: hidden;
-  background: #1a1a1a;
+  background: #1a1a1a; /* fallback frame */
 }
 
 .door-inner {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
-
 .door.unlocked.open .door-inner { transform: rotateY(180deg); }
 
 /* Faces fill the tile */
 .door-face {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   backface-visibility: hidden;
   border-radius: 12px;
   overflow: hidden;
 }
 
-/* FRONT should be on top when closed */
+/* Front (what you see first) */
 .door-front {
-  z-index: 3;                 /* make sure it's above the back */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 3;
+  display: flex; align-items: center; justify-content: center;
   position: relative;
 }
 
-/* The door art as an <img> */
+/* Door art as <img> so mixed sizes look tidy */
 .door-front .door-thumb {
   max-width: 92%;
   max-height: 92%;
-  width: auto;
-  height: auto;
-  object-fit: contain;        /* no crop, no squish */
+  width: auto; height: auto;
+  object-fit: contain;
   display: block;
 }
 
 /* Day number badge */
 .door-front .day-number {
   position: absolute;
-  top: 6px;
-  right: 8px;
-  background: rgba(0,0,0,0.7);
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-/* BACK sits underneath until flipped */
-.door-back {
-  z-index: 1;
-  transform: rotateY(180deg);
-  background: #15151c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.door-back .peek {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Locked overlay */
-.locked-overlay {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  background: rgba(0,0,0,0.55);
-  color: #ffb14d;
-  font-size: 0.95rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.door.locked:hover .locked-overlay { opacity: 1; }
-
-/* Day number badge (keep in corner; change if you want centered) */
-.door-front .day-number {
-  position: absolute;
-  top: 6px;
-  right: 8px;
+  top: 6px; right: 8px;
   background: rgba(0,0,0,0.7);
   padding: 6px 12px;
   border-radius: 8px;
@@ -152,35 +111,25 @@ body {
   z-index: 1;
   transform: rotateY(180deg);
   background: #15151c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
 }
 .door-back .peek {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
 }
 
-/* Locked overlay (only shows on hover when locked) */
+/* Locked overlay (hint on hover when locked) */
 .locked-overlay {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
   background: rgba(0,0,0,0.55);
   color: #ffb14d;
   font-size: 0.95rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 0; transition: opacity 0.3s ease;
 }
 .door.locked:hover .locked-overlay { opacity: 1; }
 
-/* Remove theme background images so they don't overwrite your front images
-   (comment these back in ONLY if you want pumpkins/tombstones/window art instead of your images)
-*/
-
-/* Buttons & modal */
+/* ========== Modal & buttons ========== */
 .action-btn {
   background: #ff7a1a;
   color: #1a1007;
@@ -191,11 +140,7 @@ body {
 }
 .action-btn:hover { filter: brightness(1.05); }
 
-.modal {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: grid; place-items: center;
-}
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; }
 .modal.hidden { display: none; }
 .modal-content {
   background: #0f0f15;

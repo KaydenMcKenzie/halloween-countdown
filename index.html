@@ -2,38 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown to Halloween!</title>
-<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"/>
-</head>
-<body class="theme-pumpkins">
-  <header class="site-header">
-  <div>
-    <h1>Countdown to Halloween</h1>
-    <div class="controls" style="text-align: center; margin-top: 10px;">
-      <label><input type="checkbox" id="previewToggle"> Preview (unlock all)</label>
-    </div>
-  </div>
-</header>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Countdown to Halloween</title>
 
+  <!-- Spooky display font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+
+  <!-- Your stylesheet (bump the ?v= number if the browser caches old CSS) -->
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <h1>Countdown to Halloween</h1>
+  </header>
+
+  <!-- Calendar grid -->
   <main>
-    <div id="calendar" class="calendar-grid"></div>
+    <div id="calendar" class="calendar-grid" aria-live="polite"></div>
   </main>
 
-    <!-- Modal -->
-  <div id="modal" class="modal hidden">
+  <!-- Modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
-      <button id="closeModal" class="close-btn" aria-label="Close">&times;</button>
-      <h2 id="modalTitle"></h2>
+      <button id="closeModal" class="close-btn" aria-label="Close modal">×</button>
+      <h2 id="modalTitle">Activity</h2>
       <img id="modalImage" alt="Activity image" />
       <div class="modal-actions">
-        <a id="modalLink" class="action-btn" target="_blank" rel="noopener">Go to activity</a>
+        <a id="modalLink" class="action-btn" href="#" target="_blank" rel="noopener">Go to activity</a>
       </div>
     </div>
   </div>
 
-  <script src="data/doors.js"></script>
-  <script src="script.js"></script>
+  <!-- Load door data first, then behavior. Bump ?v= to bust cache if needed. -->
+  <script src="data/doors.js?v=6"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

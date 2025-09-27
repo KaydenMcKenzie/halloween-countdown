@@ -11,19 +11,19 @@ function getZonedDateParts(tz) {
     timeZone: tz,
     year: "numeric",
     month: "2-digit",
-    day: "2-digit",
+    day: "2-digit"
   });
   const parts = fmt.formatToParts(new Date());
   const obj = {};
   for (const p of parts) if (p.type !== "literal") obj[p.type] = p.value;
   return {
-    year: parseInt(obj.year),
-    month: parseInt(obj.month),
-    day: parseInt(obj.day),
+    year: parseInt(obj.year, 10),
+    month: parseInt(obj.month, 10),
+    day: parseInt(obj.day, 10)
   };
 }
 
-// Only unlock when the real date reaches the door's day in October
+// Unlock only when the real date reaches the door's day in October
 function isDoorUnlocked(day) {
   const { year, month, day: todayDay } = getZonedDateParts(CONFIG.timeZone);
   if (year > CONFIG.year) return true;
@@ -35,35 +35,38 @@ function isDoorUnlocked(day) {
 
 function buildCalendar() {
   const grid = document.getElementById("calendar");
+  if (!grid) return console.error("#calendar not found in index.html");
   grid.innerHTML = "";
 
   if (!Array.isArray(window.DOORS)) {
-    console.error("DOORS data not found. Check data/doors.js is loaded before script.js.");
+    console.error("DOORS data not found. Ensure data/doors.js loads before script.js.");
     return;
   }
 
-  // Shuffle the tiles each load
+  // Shuffle tiles each load
   const shuffled = [...window.DOORS].sort(() => Math.random() - 0.5);
 
   shuffled.forEach((entry) => {
     const day = entry.day;
     const unlocked = isDoorUnlocked(day);
 
+    // Outer tile
     const door = document.createElement("div");
     door.className = "door " + (unlocked ? "unlocked" : "locked");
 
     const inner = document.createElement("div");
     inner.className = "door-inner";
 
-    // -------- Front face (door tile with centered <img>) --------
+    // ---------- FRONT (door tile with centered <img>) ----------
     const front = document.createElement("div");
     front.className = "door-face door-front";
 
     const thumb = document.createElement("img");
     thumb.className = "door-thumb";
-    // Prefer doorImage for the tile; fall back to image if that's what you used
+    thumb.loading = "eager"; // show grid quickly
+    thumb.decoding = "async";
     thumb.src = entry.doorImage || entry.image || "";
-    thumb.alt = entry.title || `Day ${day} Door`;
+    thumb.alt = entry.title ? `${entry.title} (Day ${day})` : `Day ${day} Door`;
     front.appendChild(thumb);
 
     const dayNumber = document.createElement("div");
@@ -76,22 +79,23 @@ function buildCalendar() {
     lockedOverlay.textContent = "Opens Oct " + day;
     front.appendChild(lockedOverlay);
 
-    // -------- Back face (bigger image shown behind + in modal) --------
+    // ---------- BACK (revealed image) ----------
     const back = document.createElement("div");
     back.className = "door-face door-back";
 
     const img = document.createElement("img");
     img.className = "peek";
-    // Prefer activityImage for the popup; fall back to modalImage or image
+    img.loading = "lazy"; // load only when needed
+    img.decoding = "async";
     img.src = entry.activityImage || entry.modalImage || entry.image || "";
-    img.alt = entry.title || `Day ${day} Image`;
+    img.alt = entry.title ? `${entry.title} (Day ${day})` : `Day ${day} Image`;
     back.appendChild(img);
 
     inner.appendChild(front);
     inner.appendChild(back);
     door.appendChild(inner);
 
-    // Interactions
+    // Click behavior
     if (unlocked) {
       door.addEventListener("click", () => {
         door.classList.toggle("open");
@@ -100,9 +104,7 @@ function buildCalendar() {
     } else {
       door.addEventListener("click", () => {
         lockedOverlay.style.opacity = 1;
-        setTimeout(() => {
-          lockedOverlay.style.opacity = 0;
-        }, 900);
+        setTimeout(() => (lockedOverlay.style.opacity = 0), 900);
       });
     }
 
@@ -112,25 +114,31 @@ function buildCalendar() {
 
 function openModal(entry) {
   const modal = document.getElementById("modal");
-  document.getElementById("modalTitle").textContent = entry.title || "Activity";
-
+  const titleEl = document.getElementById("modalTitle");
   const imgEl = document.getElementById("modalImage");
+  const linkEl = document.getElementById("modalLink");
+  if (!modal || !titleEl || !imgEl || !linkEl) return;
+
+  titleEl.textContent = entry.title || "Activity";
   imgEl.src = entry.activityImage || entry.modalImage || entry.image || "";
   imgEl.alt = entry.title || "Activity image";
-
-  const linkEl = document.getElementById("modalLink");
   linkEl.href = entry.link || "#";
 
   modal.classList.remove("hidden");
 }
 
 function closeModal() {
-  document.getElementById("modal").classList.add("hidden");
+  const modal = document.getElementById("modal");
+  if (modal) modal.classList.add("hidden");
 }
 
-document.getElementById("closeModal").addEventListener("click", closeModal);
-document.getElementById("modal").addEventListener("click", (e) => {
+// Close with X, backdrop, or Esc
+document.getElementById("closeModal")?.addEventListener("click", closeModal);
+document.getElementById("modal")?.addEventListener("click", (e) => {
   if (e.target.id === "modal") closeModal();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
 });
 
 // Init
