@@ -5,7 +5,7 @@ const CONFIG = {
   timeZone: "America/Toronto"
 };
 
-/* ---------- Preview (checkbox + localStorage) ---------- */
+/* ---------- Preview toggle ---------- */
 function isPreviewEnabled() {
   return localStorage.getItem("hc_preview") === "1";
 }
@@ -14,13 +14,37 @@ function setPreviewEnabled(on) {
   else localStorage.removeItem("hc_preview");
 }
 
-  const s = Math.floor(diff / 1000);
-  const days = Math.floor(s / 86400);
-  const hours = Math.floor((s % 86400) / 3600);
-  const mins = Math.floor((s % 3600) / 60);
-  const secs = s % 60;
+/* ---------- Countdown ---------- */
+function getNowInTZ(tz) {
+  return new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
+}
+function getTargetHalloweenStart(year, tz) {
+  const localMidnight = new Date(`${year}-10-31T00:00:00`);
+  return new Date(localMidnight.toLocaleString("en-US", { timeZone: tz }));
+}
+function updateCountdown() {
+  const el = document.getElementById("countdown");
+  if (!el) return;
 
-  el.textContent = `🎃 ${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+  const tz = CONFIG.timeZone;
+  const now = getNowInTZ(tz);
+  const target = getTargetHalloweenStart(CONFIG.year, tz);
+  const diffMs = target - now;
+
+  if (diffMs <= 0) {
+    el.textContent = "🎃 Happy Halloween!";
+    return;
+  }
+
+  const totalSec = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+  const secs = totalSec % 60;
+
+  el.textContent = `🎃 ${days}d ${String(hours).padStart(2, "0")}h ${String(
+    mins
+  ).padStart(2, "0")}m ${String(secs).padStart(2, "0")}s`;
 }
 
 /* ---------- Date helpers ---------- */
@@ -39,40 +63,7 @@ function getZonedDateParts(tz) {
     month: parseInt(obj.month, 10),
     day: parseInt(obj.day, 10)
   };
-
-/* ---------- Countdown (to Oct 31 in Toronto) ---------- */
-function getNowInTZ(tz) {
-  // Create a Date that represents "now" displayed in tz, then reparse to a Date
-  return new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
 }
-function getTargetHalloweenStart(year, tz) {
-  // Target: Oct 31 at 00:00:00 in tz
-  const localMidnight = new Date(`${year}-10-31T00:00:00`);
-  return new Date(localMidnight.toLocaleString('en-US', { timeZone: tz }));
-}
-function renderCountdown() {
-  const el = document.getElementById('countdown');
-  if (!el) return;
-
-  const tz = CONFIG.timeZone || 'America/Toronto';
-  const now = getNowInTZ(tz);
-  const target = getTargetHalloweenStart(CONFIG.year, tz);
-  const diffMs = target - now;
-
-  if (diffMs <= 0) {
-    el.textContent = '🎃 Happy Halloween!';
-    return;
-  }
-
-  const totalSec = Math.floor(diffMs / 1000);
-  const days = Math.floor(totalSec / 86400);
-  const hours = Math.floor((totalSec % 86400) / 3600);
-  const mins  = Math.floor((totalSec % 3600) / 60);
-  const secs  = totalSec % 60;
-
-  el.textContent = `🎃 ${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
-}
-
 function isDoorUnlocked(day, preview = false) {
   if (preview) return true;
   const { year, month, day: todayDay } = getZonedDateParts(CONFIG.timeZone);
@@ -83,29 +74,28 @@ function isDoorUnlocked(day, preview = false) {
   return todayDay >= day;
 }
 
-/* ---------- Build UI ---------- */
+/* ---------- Build calendar ---------- */
 function buildCalendar() {
   const grid = document.getElementById("calendar");
   if (!grid) return console.error("#calendar not found");
   grid.innerHTML = "";
 
   if (!Array.isArray(window.DOORS)) {
-    console.error("window.DOORS not found. Make sure data/doors.js is loaded before script.js.");
+    console.error("window.DOORS not found. Check data/doors.js is loaded first.");
     return;
   }
 
-  // preview state from checkbox (if present) or memory
   const toggle = document.getElementById("previewToggle");
   const preview = toggle ? toggle.checked : isPreviewEnabled();
 
-  // SHUFFLE the tiles each load
+  // Shuffle doors
   const shuffled = [...window.DOORS].sort(() => Math.random() - 0.5);
 
   shuffled.forEach((entry) => {
     const day = entry.day;
     const unlocked = isDoorUnlocked(day, preview);
 
-    /* Outer tile */
+    /* Door container */
     const door = document.createElement("div");
     door.className = "door " + (unlocked ? "unlocked" : "locked");
 
@@ -150,7 +140,7 @@ function buildCalendar() {
     inner.appendChild(back);
     door.appendChild(inner);
 
-    /* Click behavior */
+    /* Interactions */
     if (unlocked) {
       door.addEventListener("click", () => {
         door.classList.toggle("open");
@@ -186,34 +176,38 @@ function closeModal() {
   document.getElementById("modal")?.classList.add("hidden");
 }
 
-/* ---------- Events & init ---------- */
-document.getElementById("closeModal")?.addEventListener("click", closeModal);
-document.getElementById("modal")?.addEventListener("click", (e) => {
-  if (e.target.id === "modal") closeModal();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
-});
-
+/* ---------- Events & Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
+  // Preview toggle
   const toggle = document.getElementById("previewToggle");
   if (toggle) {
-    toggle.checked = isPreviewEnabled();                // load memory
-    toggle.addEventListener("change", (e) => {          // persist & rebuild
+    toggle.checked = isPreviewEnabled();
+    toggle.addEventListener("change", (e) => {
       setPreviewEnabled(e.target.checked);
       buildCalendar();
     });
   }
 
-document.getElementById("resetDoors").addEventListener("click", () => {
-  document.querySelectorAll(".door.open").forEach(door => {
-    door.classList.remove("open");
+  // Reset doors
+  document.getElementById("resetDoors")?.addEventListener("click", () => {
+    document.querySelectorAll(".door.open").forEach((door) =>
+      door.classList.remove("open")
+    );
   });
 
-// Start / refresh the corner countdown
-updateCountdown();
-setInterval(updateCountdown, 1000);
+  // Modal close
+  document.getElementById("closeModal")?.addEventListener("click", closeModal);
+  document.getElementById("modal")?.addEventListener("click", (e) => {
+    if (e.target.id === "modal") closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
 
+  // Countdown
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Build calendar
   buildCalendar();
 });
-

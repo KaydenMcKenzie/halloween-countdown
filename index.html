@@ -8,28 +8,29 @@
   <!-- Title font -->
   <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
 
-  <!-- Styles (bump v= if your browser caches old CSS) -->
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <!-- Styles (cache-busted) -->
+  <link rel="stylesheet" href="styles.css?v=23" />
 </head>
 <body>
-<!-- Upper-left countdown -->
-<div id="countdown" class="corner-countdown"></div>
+  <!-- Upper-left countdown -->
+  <div id="countdown" class="corner-countdown"></div>
+
   <header class="site-header">
     <h1>Halloween Countdown</h1>
 
     <!-- Centered preview toggle -->
-<div class="preview-wrapper">
-  <label class="preview-toggle">
-    <input type="checkbox" id="previewToggle" />
-    Preview (unlock all)
-  </label>
-</div>
+    <div class="preview-wrapper">
+      <label class="preview-toggle">
+        <input type="checkbox" id="previewToggle" />
+        Preview (unlock all)
+      </label>
+    </div>
 
-<!-- Reset button -->
-<div class="reset-wrapper">
-  <button id="resetDoors" class="reset-btn">Reset all doors</button>
-</div>
-</header>
+    <!-- Reset button -->
+    <div class="reset-wrapper">
+      <button id="resetDoors" class="reset-btn">Reset all doors</button>
+    </div>
+  </header>
 
   <main>
     <div id="calendar" class="calendar-grid" aria-live="polite"></div>
@@ -47,8 +48,8 @@
     </div>
   </div>
 
-  <!-- Data first, then behavior (bump v= to bust cache) -->
-  <script src="data/doors.js?v=20"></script>
-  <script src="script.js?v=20"></script>
+  <!-- Scripts (cache-busted) -->
+  <script src="data/doors.js?v=23"></script>
+<script src="script.js?v=23"></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
-/* ===== Reset ===== */
+/* ========== Reset ========== */
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
-/* ===== Page ===== */
+/* ========== Page background & base ========== */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background:
@@ -15,7 +15,7 @@ body {
   flex-direction: column;
 }
 
-/* ===== Header ===== */
+/* ========== Header (title + controls) ========== */
 .site-header {
   padding: 20px 16px 10px;
   display: flex;
@@ -31,7 +31,7 @@ body {
   text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
 }
 
-//* Upper-left countdown badge */
+/* Countdown badge (upper-left) */
 .corner-countdown {
   position: fixed;
   top: 10px;
@@ -48,7 +48,7 @@ body {
   backdrop-filter: blur(2px);
 }
 
-/* centered preview under the title */
+/* Preview toggle centered under the title */
 .preview-wrapper {
   width: 100%;
   display: flex;
@@ -62,14 +62,16 @@ body {
   padding: 6px 12px;
   border-radius: 10px;
 }
-.preview-toggle input { margin-right: 6px; cursor: pointer; 
+.preview-toggle input {
+  margin-right: 6px;
+  cursor: pointer;
 }
 
+/* Reset button (under preview) */
 .reset-wrapper {
   text-align: center;
   margin: 10px 0 25px;
 }
-
 .reset-btn {
   background: #ff7a1a;
   color: #1a1007;
@@ -80,34 +82,33 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-
 .reset-btn:hover {
   background: #ff943d;
 }
 
-/* ===== Calendar grid ===== */
+/* ========== Calendar grid ========== */
 .calendar-grid {
   width: 100%;
   max-width: 1200px;
   margin: 14px auto 40px;
   padding: 10px;
   display: grid;
-  /* neat rows: each tile min 220px wide, then wrap */
+  /* neat rows: each tile min 220px wide, then wrap automatically */
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
-/* ===== Door tiles ===== */
+/* ========== Door tiles ========== */
 .door {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;                            /* tall door shape */
+  aspect-ratio: 3 / 4;                 /* consistent tall door shape */
   min-height: clamp(220px, 24vw, 340px);
   perspective: 1000px;
   border-radius: 16px;
   overflow: hidden;
-  background: transparent;                        /* no black box */
-  border: 3px solid rgba(255,255,255,0.22);       /* constant outline */
+  background: transparent;             /* no black box on the front */
+  border: 3px solid rgba(255,255,255,0.22); /* always-visible outline */
   box-shadow: 0 6px 16px rgba(0,0,0,0.5);
 }
 
@@ -116,7 +117,9 @@ body {
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
-.door.unlocked.open .door-inner { transform: rotateY(180deg); }
+.door.unlocked.open .door-inner {
+  transform: rotateY(180deg);
+}
 
 .door-face {
   position: absolute; inset: 0;
@@ -134,9 +137,9 @@ body {
 .door-front .door-thumb {
   width: 100%;
   height: 100%;
-  object-fit: contain;                             /* centers art, no crop */
+  object-fit: contain;      /* centers art, no crop */
   display: block;
-  padding: 12px;                                   /* breathing room */
+  padding: 12px;            /* breathing room so edges don't touch */
 }
 
 /* Day badge (top-left, bigger) */
@@ -154,18 +157,18 @@ body {
   letter-spacing: .02em;
 }
 
-/* Back (revealed) */
+/* Back (revealed) – subtle panel to make activity art pop */
 .door-back {
   transform: rotateY(180deg);
-  background: #15151c;                             /* only on the back */
+  background: #15151c;      /* only the back uses a dark panel */
 }
 .door-back .peek {
   width: 100%;
   height: 100%;
-  object-fit: contain; 
+  object-fit: contain;      /* keep full image visible inside tile */
 }
 
-/* Locked hint */
+/* Locked hint (shows on hover for locked doors) */
 .locked-overlay {
   position: absolute; inset: 0;
   display: grid; place-items: center;
@@ -175,9 +178,11 @@ body {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.door.locked:hover .locked-overlay { opacity: 1; }
+.door.locked:hover .locked-overlay {
+  opacity: 1;
+}
 
-/* ===== Modal & button ===== */
+/* ========== Modal & button ========== */
 .action-btn {
   background: #ff7a1a;
   color: #1a1007;
@@ -188,7 +193,11 @@ body {
 }
 .action-btn:hover { filter: brightness(1.05); }
 
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; }
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: grid; place-items: center;
+}
 .modal.hidden { display: none; }
 .modal-content {
   background: #0f0f15;
@@ -200,12 +209,22 @@ body {
   overflow: auto;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-.modal-content h2 { margin: 8px 0 12px; }
-.modal-content img { width: 100%; border-radius: 10px; margin-bottom: 14px; }
-.modal-actions { display: flex; justify-content: flex-end; }
+.modal-content h2 {
+  margin: 8px 0 12px;
+}
+.modal-content img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
 .close-btn {
   position: sticky; top: 0; left: 100%;
   transform: translateX(4px);
   font-size: 26px; line-height: 1;
-  background: transparent; color: #fff; border: none; cursor: pointer;
+  background: transparent;
+  color: #fff; border: none; cursor: pointer;
 }
