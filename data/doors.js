@@ -167,21 +167,21 @@ window.DOORS = [
 "title": "Day 27 Activity", 
 "image": "assets/placeholders/Door_27.jpg", 
 "modalImage": "assets/placeholders/Day27_Spot_12_Differences.jpg", 
-"link": "https://www.canva.com/design/DAGz7SeSqlE/WN8tbkGOT9KMyfQxdLZmVQ/edit?utm_content=DAGz7SeSqlE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+"link": "https://www.canva.com/design/DAGzxO_KxFU/j-dYI_yHEZtnglCUf8ijFQ/edit?utm_content=DAGzxO_KxFU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
  },
   { 
 "day": 28, 
 "title": "Day 28 Activity", 
 "image": "assets/placeholders/Door_28.jpg", 
 "modalImage": "assets/placeholders/Day28_Wizards_Brew.jpg", 
-"link": "https://www.canva.com/design/DAGzpKjP_1E/bEpQX-F_-_ptb8ZlOvIGCQ/edit?utm_content=DAGzpKjP_1E&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+"link": "https://www.canva.com/design/DAGz7SeSqlE/WN8tbkGOT9KMyfQxdLZmVQ/edit?utm_content=DAGz7SeSqlE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
  },
   { 
 "day": 29, 
 "title": "Day 29 Activity", 
 "image": "assets/placeholders/Door_29.jpg", 
 "modalImage": "assets/placeholders/Day29_Draw_It.jpg",                     
-"link": "https://www.canva.com/design/DAGzP4yvbCg/72cdEeMfkiFUPzNl2CEUhA/edit?utm_content=DAGzP4yvbCg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+"link": "https://www.canva.com/design/DAGzpKjP_1E/bEpQX-F_-_ptb8ZlOvIGCQ/edit?utm_content=DAGzpKjP_1E&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
  },
   { 
 "day": 30, 
