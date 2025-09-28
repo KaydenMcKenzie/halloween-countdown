@@ -45,7 +45,27 @@ body {
   padding: 6px 12px;
   border-radius: 10px;
 }
-.preview-toggle input { margin-right: 6px; cursor: pointer; }
+.preview-toggle input { margin-right: 6px; cursor: pointer; 
+}
+.reset-toggle {
+  text-align: center;
+  margin: 10px 0 25px;
+}
+
+.reset-btn {
+  background: #ff7a1a;
+  color: #1a1007;
+  font-weight: bold;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.reset-btn:hover {
+  background: #ff943d;
+}
 
 /* ===== Calendar grid ===== */
 .calendar-grid {

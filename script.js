@@ -164,3 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   buildCalendar();
 });
+document.getElementById("resetDoors").addEventListener("click", () => {
+  document.querySelectorAll(".door.open").forEach(door => {
+    door.classList.remove("open");
+  });
+});
