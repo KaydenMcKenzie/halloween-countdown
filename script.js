@@ -14,6 +14,41 @@ function setPreviewEnabled(on) {
   else localStorage.removeItem("hc_preview");
 }
 
+/* ---------- Countdown (to Oct 31 in Toronto) ---------- */
+function nowInTZ(tz) {
+  // Convert "now" to a Date object representing that instant in the given TZ
+  return new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
+}
+function targetHalloweenStart(year, tz) {
+  // Midnight at the start of Oct 31 in the given timezone
+  const local = new Date(`${year}-10-31T00:00:00`);
+  return new Date(local.toLocaleString('en-US', { timeZone: tz }));
+}
+function updateCountdown() {
+  const el = document.getElementById('countdown');
+  if (!el) return;
+
+  // Pick this year's Oct 31; if we've passed it, show the festive message.
+  const tz = CONFIG.timeZone || 'America/Toronto';
+  const now = nowInTZ(tz);
+  const target = targetHalloweenStart(CONFIG.year, tz);
+
+  const diff = target - now; // ms
+
+  if (diff <= 0) {
+    el.textContent = '🎃 Happy Halloween!';
+    return;
+  }
+
+  const s = Math.floor(diff / 1000);
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+
+  el.textContent = `🎃 ${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+}
+
 /* ---------- Date helpers ---------- */
 function getZonedDateParts(tz) {
   const fmt = new Intl.DateTimeFormat("en-CA", {
@@ -162,10 +197,12 @@ document.addEventListener("DOMContentLoaded", () => {
       buildCalendar();
     });
   }
-  buildCalendar();
-});
+
 document.getElementById("resetDoors").addEventListener("click", () => {
   document.querySelectorAll(".door.open").forEach(door => {
     door.classList.remove("open");
   });
+
+  buildCalendar();
 });
+

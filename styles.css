@@ -47,7 +47,8 @@ body {
 }
 .preview-toggle input { margin-right: 6px; cursor: pointer; 
 }
-.reset-toggle {
+
+.reset-wrapper {
   text-align: center;
   margin: 10px 0 25px;
 }
