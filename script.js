@@ -203,6 +203,10 @@ document.getElementById("resetDoors").addEventListener("click", () => {
     door.classList.remove("open");
   });
 
+// Start / refresh the corner countdown
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
   buildCalendar();
 });
 
