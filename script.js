@@ -14,32 +14,6 @@ function setPreviewEnabled(on) {
   else localStorage.removeItem("hc_preview");
 }
 
-/* ---------- Countdown (to Oct 31 in Toronto) ---------- */
-function nowInTZ(tz) {
-  // Convert "now" to a Date object representing that instant in the given TZ
-  return new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
-}
-function targetHalloweenStart(year, tz) {
-  // Midnight at the start of Oct 31 in the given timezone
-  const local = new Date(`${year}-10-31T00:00:00`);
-  return new Date(local.toLocaleString('en-US', { timeZone: tz }));
-}
-function updateCountdown() {
-  const el = document.getElementById('countdown');
-  if (!el) return;
-
-  // Pick this year's Oct 31; if we've passed it, show the festive message.
-  const tz = CONFIG.timeZone || 'America/Toronto';
-  const now = nowInTZ(tz);
-  const target = targetHalloweenStart(CONFIG.year, tz);
-
-  const diff = target - now; // ms
-
-  if (diff <= 0) {
-    el.textContent = '🎃 Happy Halloween!';
-    return;
-  }
-
   const s = Math.floor(diff / 1000);
   const days = Math.floor(s / 86400);
   const hours = Math.floor((s % 86400) / 3600);
@@ -65,7 +39,40 @@ function getZonedDateParts(tz) {
     month: parseInt(obj.month, 10),
     day: parseInt(obj.day, 10)
   };
+
+/* ---------- Countdown (to Oct 31 in Toronto) ---------- */
+function getNowInTZ(tz) {
+  // Create a Date that represents "now" displayed in tz, then reparse to a Date
+  return new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
 }
+function getTargetHalloweenStart(year, tz) {
+  // Target: Oct 31 at 00:00:00 in tz
+  const localMidnight = new Date(`${year}-10-31T00:00:00`);
+  return new Date(localMidnight.toLocaleString('en-US', { timeZone: tz }));
+}
+function renderCountdown() {
+  const el = document.getElementById('countdown');
+  if (!el) return;
+
+  const tz = CONFIG.timeZone || 'America/Toronto';
+  const now = getNowInTZ(tz);
+  const target = getTargetHalloweenStart(CONFIG.year, tz);
+  const diffMs = target - now;
+
+  if (diffMs <= 0) {
+    el.textContent = '🎃 Happy Halloween!';
+    return;
+  }
+
+  const totalSec = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const mins  = Math.floor((totalSec % 3600) / 60);
+  const secs  = totalSec % 60;
+
+  el.textContent = `🎃 ${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+}
+
 function isDoorUnlocked(day, preview = false) {
   if (preview) return true;
   const { year, month, day: todayDay } = getZonedDateParts(CONFIG.timeZone);

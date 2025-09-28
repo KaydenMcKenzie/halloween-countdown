@@ -31,6 +31,23 @@ body {
   text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
 }
 
+//* Upper-left countdown badge */
+.corner-countdown {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.55);
+  color: #ffb14d;
+  font-weight: 800;
+  font-size: clamp(.9rem, 1.6vw, 1.05rem);
+  letter-spacing: .02em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  backdrop-filter: blur(2px);
+}
+
 /* centered preview under the title */
 .preview-wrapper {
   width: 100%;
