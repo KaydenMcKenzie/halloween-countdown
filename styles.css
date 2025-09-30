@@ -191,6 +191,11 @@ body {
   border-radius: 10px;
   font-weight: 700;
 }
+
+.secondary-btn {
+  margin-right: auto;
+}
+
 .action-btn:hover { filter: brightness(1.05); }
 
 .modal {

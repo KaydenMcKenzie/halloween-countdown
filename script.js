@@ -163,12 +163,14 @@ function openModal(entry) {
   const titleEl = document.getElementById("modalTitle");
   const imgEl = document.getElementById("modalImage");
   const linkEl = document.getElementById("modalLink");
+  const bonusEl = document.getElementById("bonusLink");
   if (!modal || !titleEl || !imgEl || !linkEl) return;
 
   titleEl.textContent = entry.title || "Activity";
   imgEl.src = entry.activityImage || entry.modalImage || entry.image || "";
   imgEl.alt = entry.title || "Activity image";
-  linkEl.href = entry.link || "#";
+  linkEl.href = entry.link || "#";                     
+  bonusEl.href = entry.bonusLink || "#";
 
   modal.classList.remove("hidden");
 }
