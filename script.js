@@ -5,14 +5,8 @@ const CONFIG = {
   timeZone: "America/Toronto"
 };
 
-/* ---------- Preview toggle ---------- */
-function isPreviewEnabled() {
-  return localStorage.getItem("hc_preview") === "1";
-}
-function setPreviewEnabled(on) {
-  if (on) localStorage.setItem("hc_preview", "1");
-  else localStorage.removeItem("hc_preview");
-}
+// Hard-disable any old tester preview setting
+try { localStorage.removeItem("hc_preview"); } catch {}
 
 /* ---------- Countdown ---------- */
 function getNowInTZ(tz) {
@@ -64,8 +58,8 @@ function getZonedDateParts(tz) {
     day: parseInt(obj.day, 10)
   };
 }
-function isDoorUnlocked(day, preview = false) {
-  if (preview) return true;
+function isDoorUnlocked(day) {
+  // Launch mode: NO preview; unlock only by real date in Toronto
   const { year, month, day: todayDay } = getZonedDateParts(CONFIG.timeZone);
   if (year > CONFIG.year) return true;
   if (year < CONFIG.year) return false;
@@ -85,15 +79,12 @@ function buildCalendar() {
     return;
   }
 
-  const toggle = document.getElementById("previewToggle");
-  const preview = toggle ? toggle.checked : isPreviewEnabled();
-
-  // Shuffle doors
+  // Shuffle doors every load
   const shuffled = [...window.DOORS].sort(() => Math.random() - 0.5);
 
   shuffled.forEach((entry) => {
     const day = entry.day;
-    const unlocked = isDoorUnlocked(day, preview);
+    const unlocked = isDoorUnlocked(day);
 
     /* Door container */
     const door = document.createElement("div");
@@ -140,10 +131,11 @@ function buildCalendar() {
     inner.appendChild(back);
     door.appendChild(inner);
 
-    /* Interactions */
+    /* Interactions — one open at a time looks tidier */
     if (unlocked) {
       door.addEventListener("click", () => {
-        door.classList.toggle("open");
+        document.querySelectorAll(".door.open").forEach(d => { if (d !== door) d.classList.remove("open"); });
+        door.classList.add("open");
         openModal(entry);
       });
     } else {
@@ -159,44 +151,30 @@ function buildCalendar() {
 
 /* ---------- Modal ---------- */
 function openModal(entry) {
-  const modal = document.getElementById("modal");
+  const modal   = document.getElementById("modal");
   const titleEl = document.getElementById("modalTitle");
-  const imgEl = document.getElementById("modalImage");
-  const linkEl = document.getElementById("modalLink");
+  const imgEl   = document.getElementById("modalImage");
+  const linkEl  = document.getElementById("modalLink");
   const bonusEl = document.getElementById("bonusLink");
   if (!modal || !titleEl || !imgEl || !linkEl) return;
 
   titleEl.textContent = entry.title || "Activity";
   imgEl.src = entry.activityImage || entry.modalImage || entry.image || "";
   imgEl.alt = entry.title || "Activity image";
-  linkEl.href = entry.link || "#";                     
-  bonusEl.href = entry.bonusLink || "#";
+  linkEl.href = entry.link || "#";
+  if (bonusEl) bonusEl.href = entry.bonusLink || "#";
 
   modal.classList.remove("hidden");
 }
 function closeModal() {
-  document.getElementById("modal")?.classList.add("hidden");
+  const modal = document.getElementById("modal");
+  if (modal) modal.classList.add("hidden");
+  // close any flipped doors for a tidy grid
+  document.querySelectorAll(".door.open").forEach(d => d.classList.remove("open"));
 }
 
 /* ---------- Events & Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
-  // Preview toggle
-  const toggle = document.getElementById("previewToggle");
-  if (toggle) {
-    toggle.checked = isPreviewEnabled();
-    toggle.addEventListener("change", (e) => {
-      setPreviewEnabled(e.target.checked);
-      buildCalendar();
-    });
-  }
-
-  // Reset doors
-  document.getElementById("resetDoors")?.addEventListener("click", () => {
-    document.querySelectorAll(".door.open").forEach((door) =>
-      door.classList.remove("open")
-    );
-  });
-
   // Modal close
   document.getElementById("closeModal")?.addEventListener("click", closeModal);
   document.getElementById("modal")?.addEventListener("click", (e) => {
